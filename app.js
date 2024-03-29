@@ -21,9 +21,15 @@ const addTaskData = async () => {
         taskList.innerHTML += `<li>${newTaskInput}</li>`; 
         document.getElementById("newTask").value = "";
     } else {
-        alert("Please enter a task!");3
+        alert("Please enter a task!");
     }
 };
+
+const onClickTask = (index) => {
+console.log('TASK CLICKED');
+const clicedTask = document.getElementById(`list-${index}`)
+clicedTask.classList.add("done")
+}
 
 const taskListComponent = (taskData) => {
     const taskList = document.getElementById("taskList");
@@ -33,12 +39,19 @@ const taskListComponent = (taskData) => {
         for (let i = 0; i < taskData.length; i++) {
             const element = taskData[i];
             console.log('element', element);
-            list = list + `<li id='list-${i}'>${element}</li>`
+            list = list + `<li id='list-${i}' class='task'>${element}</li>`
         }
         console.log('list', list)
         taskList.innerHTML = list
+
+        for (let i = 0; i < taskData.length; i++) {
+            console.log('addEventListener with id list-', i);
+            document.getElementById(`list-${i}`).addEventListener("click",() => onClickTask(i));
+        }
     }
     else taskList.innerHTML = `<li>There is no task</li>`
 };
 getTaskData();
+
 document.getElementById("addTaskBtn").addEventListener("click", addTaskData);
+
